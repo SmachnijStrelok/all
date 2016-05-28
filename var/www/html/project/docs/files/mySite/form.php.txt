@@ -1,0 +1,46 @@
+<?php
+$path = 'img/'; // директория для загрузки
+$ext = array_pop(explode('.',$_FILES['myfile']['name'])); // расширение
+$new_name = time().'.'.$ext; // новое имя с расширением
+$full_path = $path.$new_name; // полный путь с новым именем и расширением
+
+if($_FILES['myfile']['error'] == 0&&(
+	mime_content_type($_FILES['myfile']['tmp_name'])=="image/gif"||
+	mime_content_type($_FILES['myfile']['tmp_name'])=="image/jpeg"||
+	mime_content_type($_FILES['myfile']['tmp_name'])=="image/png"
+	) ){
+    if(move_uploaded_file($_FILES['myfile']['tmp_name'], $full_path)){
+        // Если файл успешно загружен, то вносим в БД (надеюсь, что вы знаете как)
+        // Можно сохранить $full_path (полный путь) или просто имя файла - $new_name
+        $s_file=mysql_query("SELECT avatar FROM users WHERE md5_login='$r_login'");
+        if($s_file!=NULL){
+        	$r_file=mysql_result($s_file, 0);
+        	unlink($r_file);
+        	mysql_query("UPDATE users SET avatar='$full_path' WHERE md5_login='$r_login'");
+        }
+    }
+}else{
+	echo "Вы можете загружать изображения форматов: jpeg, jpg, png, gif";
+}
+
+?>
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Документ без названия</title>
+</head>
+
+<body>
+<form action="#" method="post" enctype="multipart/form-data">
+  <p>
+    <label>
+      <input type="file" name="myfile" id="myfile">
+    </label>
+  </p>
+  <p>
+    <input type="submit" name="submit" id="submit" value="Отправить">
+  </p>
+</form>
+</body>
+</html>

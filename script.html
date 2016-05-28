@@ -1,0 +1,16 @@
+<html><script type="text/javascript" src="jquery-2.2.3.min.js"></script>
+<script type="text/javascript">
+            $(document).ready(function() {
+                $('#selectID').change(function() {
+                    var optionID = $('option:selected').attr('id');
+                    alert(optionID+'---'+$('option:selected').val());
+                });
+                
+            });
+    </script>
+<select name="mySelect" id="selectID">
+    <option id="ûגאןגאûן" value="somevalue1">asdf</option>
+    <option id="פפפפפפ" value="somevalue2">aaaaa</option>
+    <option id="ûûûûû" value="somevalue3">פגûאפûגא</option>
+</select>
+</html>

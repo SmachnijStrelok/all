@@ -1,0 +1,15 @@
+<html><script type="text/javascript" src="jquery-2.2.3.min.js"></script>
+   <?php
+    $db = mysql_connect("localhost", "root", "slipknot");
+    mysql_select_db("good_mark");
+    mysql_query("SET CHARSET utf-8");
+ 
+    if(!isset($_POST['value'])) {
+        $_POST['value'] = 1;
+    }
+    $value=$_POST['value'];
+    $s_value=mysql_query("SELECT name, inn, kpp, ogrn, okpo, okato, oved, ur_adress, f_adress, kor_adress, fax, phone, email FROM organizations WHERE name=".$value." ");
+    $res_val=mysql_fetch_assoc($s_value);
+    print $res_val['value']."--".$res_val['type']."<script>alert('adsf')</script>";
+?>
+</html>

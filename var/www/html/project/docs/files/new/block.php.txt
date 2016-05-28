@@ -1,0 +1,41 @@
+<?php
+    header('Content-Type: text/html; charset=utf-8');
+    $db = mysql_connect("localhost", "root", "slipknot");
+    mysql_select_db("good_mark");
+    
+ 
+    if(isset($_POST['id'])) {
+        $_POST['id'] = 1;
+    
+    $value=$_POST['id'];
+    //print "<script>alert('".$value."')</script>";
+    $s_value=mysql_query("SELECT name, inn, kpp, ogrn, okpo, okato, oved, ur_adress, f_adress, kor_adress, fax, phone, email  FROM organizations WHERE name='".$value."'");
+    $res_val=mysql_fetch_assoc($s_value);
+    /*print "<script>";
+    foreach($res_val as $key => $val){
+        print "$('#".$key."').attr('value','".$value."')";
+    }
+      print "</script>";*/
+    //print "<script>alert('".$res_val['inn']."');</script>";
+    echo json_encode($res_val); 
+    }
+    
+    if(isset($_POST['table_id'])){
+        $tableId=$_POST['table_id'];
+        //$tableId=mysql_result(mysql_query("SELECT id FROM tables WHERE name='$tableName'"),0);
+        $sStringId=mysql_query("SELECT string_id FROM table_id WHERE table_id='$tableId'");
+        $col=mysql_num_rows($sStringId);
+        $arr=array();
+        for($i=0;$i<$col;$i++){
+            $stringId=mysql_result($sStringId,$i);
+            $stringName=mysql_result(mysql_query("SELECT name FROM string WHERE id='$stringId'"),0);
+            $arr[$stringId]=$stringName;
+            //print $arr[$stringId];
+        }
+        echo json_encode($arr,JSON_UNESCAPED_UNICODE);
+    }
+if(isset($_POST['old_table_id'])){
+    $arr[0]=mysql_result(mysql_query("SELECT max(id) FROM tables"),0)+1;
+    echo json_encode($arr,JSON_UNESCAPED_UNICODE);
+}
+?>

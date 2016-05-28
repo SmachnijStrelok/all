@@ -1,0 +1,104 @@
+<?php
+	mysql_connect("localhost","root","password");
+	mysql_query("CREATE DATABASE IF NOT EXISTS good_mark");
+	mysql_select_db("good_mark");
+
+	function check($var){
+		return htmlspecialchars(mysql_real_escape_string($var));
+	}
+
+	if(
+		isset($_POST["login"]) AND isset($_POST["password"]) AND isset($_POST["email"]) AND isset($_POST["mobile"]) AND isset($_POST["name"]) AND isset($_POST["surname"]) AND isset($_POST["middle_name"]) AND isset($_POST["country"]) AND isset($_POST["tower"]) AND isset($_POST["work"]) AND isset($_POST["job"]) )
+	{
+		
+		
+		if(preg_match("#\A[a-zA-Z0-9]{4,16}\z#", $_POST["login"]) AND 
+		preg_match("#\A[-_a-zA-Z0-9]{4,16}\z#", $_POST["password"]) AND 
+		preg_match("#\A[-_a-zA-Z0-9]{4,16}\z#", $_POST["a_password"]) AND 
+		preg_match("#\A[?+абвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ]{4,20}\z#", $_POST["country"]) AND 
+		preg_match("#\A[?+абвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ]{4,20}\z#", $_POST["tower"]) AND 
+		preg_match("#\A([- a-zA-Z0-9]{4,50})|([- абвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ0-9]{4,50})\z#", $_POST["work"]) AND 
+		preg_match("#\A([?+ абвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯa-zA-Z]{4,50})\z#", $_POST["job"]) AND 
+		preg_match("#\A[?+абвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ]{2,50}\z#", $_POST["name"]) AND 
+		preg_match("#\A[?+абвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ]{4,50}\z#", $_POST["surname"]) AND 
+		preg_match("#\A[?+абвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ]{4,50}\z#", $_POST["middle_name"]) AND 
+		preg_match("#\A[0-9]{10}\z#", $_POST["mobile"]) AND
+		preg_match("#\A[\.\-_A-Za-z0-9]+?@[\.\-A-Za-z0-9]+?[\ .A-Za-z0-9]{2,}\z#", $_POST["email"]) AND $_POST["password"]==$_POST["a_password"]){
+
+			$p_login=check($_POST["login"]);
+			$p_password=check($_POST["password"]);
+			$p_email=check($_POST["email"]);
+			$p_mobile=check($_POST["mobile"]);
+			$p_name=check($_POST["name"]);
+			$p_surname=check($_POST["surname"]);
+			$p_middle_name=check($_POST["middle_name"]);
+			$p_country=check($_POST["country"]);
+			$p_tower=check($_POST["tower"]);
+			$p_work=check($_POST["work"]);
+			$p_job=check($_POST["job"]);
+			$dates=time();
+			$md5_password=md5($p_password);
+			$md5_login=md5($p_login);
+			//$check_email="n";
+
+			if(
+				mysql_query("CREATE TABLE users(
+					id INT AUTO_INCREMENT,
+					login VARCHAR(64),
+					md5_login VARCHAR(64),
+					password VARCHAR(64),
+					md5_password VARCHAR(64),
+					dates VARCHAR(64),
+					email VARCHAR(64),
+					check_email VARCHAR(64),
+					mobile VARCHAR(16),
+					name VARCHAR(32),
+					surname VARCHAR(32),
+					middle_name VARCHAR(32),
+					country VARCHAR(32),
+					tower VARCHAR(32),
+					work VARCHAR(128),
+					job VARCHAR(128),
+					time_pass VARCHAR(128),
+					PRIMARY KEY(id))")
+			){
+				$nr=rand(1000,9999)*rand(1000,9999)."agf".rand(1000,9999)."fq".rand(1000,9999);
+				$check_email=$nr;
+				mysql_query("INSERT INTO users(login,md5_login,password,md5_password,email,check_email,dates,mobile,name,surname,middle_name,country,tower,work,job) VALUES('$p_login','$md5_login','$p_password','$md5_password','$p_email','$check_email','$dates','$p_mobile','$p_name','$p_surname','$p_middle_name','$p_country','$p_tower','$p_work','$p_job')");
+				setcookie($md5_login, $md5_password);
+				include("form.p");
+				print $nr;
+				mail($p_email, "Подтверждение e-mail", "Пожалуйста введите в личном кабинете:".$nr);
+				print "<font color='green'>Вы успешно зарегестрированы, для доступа к личному кабинету, войдите в него и введите код, который вам пришел на указанный e-mail </font>";
+			}else{
+				$s_login=mysql_query("SELECT login FROM users WHERE login='$p_login'");
+				if($s_login==""){
+					$s_email=mysql_query("SELECT email FROM users WHERE email='$p_email'");
+					if($s_email==""){
+						$s_mobile=mysql_query("SELECT mobile FROM users WHERE mobile='$p_mobile'");
+						if($s_mobile==""){
+							mysql_query("INSERT INTO users(login,md5_login,password,md5_password,email,check_email,dates,mobile,name,surname,middle_name,country,tower,work,job) VALUES('$p_login','$md5_login','$p_password','$md5_password','$p_email','$check_email','$dates','$p_mobile','$p_name','$p_surname','$p_middle_name','$p_country','$p_tower','$p_work','$p_job')");
+							setcookie("d56b699830e77ba53855679cb1d252da", $md5_login);
+							setcookie("5f4dcc3b5aa765d61d8327deb882cf99", $md5_password);
+							include("form.p");
+							print $nr;
+							mail($p_email, "Подтверждение e-mail", "Пожалуйста введите в личном кабинете:".$nr);
+							print "<font color='green'>Вы успешно зарегестрированы, для доступа к личному кабинету, войдите в него и введите код, который вам пришел на указанный e-mail </font>";
+						}else{
+							print "<font color='red'>Один и тот же телефон не может фигурировать у двух пользователей.</font>";
+						}
+					}else{
+						print "<font color='red'>Один e-mail, один логин!</font>";
+					}
+				}else{
+					print "<font color='red'>Такой логин уже существует! Придумайте другой!</font>";
+				}
+			}
+		}else{
+		print "<h3><font color=red>Одно из полей заполнено неверно!</font></h3>";
+	}
+	}else{
+		include("form.p");
+	}
+
+?></html>

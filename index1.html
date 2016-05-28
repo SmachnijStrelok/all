@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="shortcut icon" href="images/icon.jpg">
+<title>Краевой фонд науки</title>
+<link href="css/style.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<div class="wrapper">
+
+<header>
+
+	<div id="hed_main">
+		<a href="index.html"><span id="hed_title">Краевой фонд науки</span></a>
+	</div>
+	<span id="post_header">ДУМАЕМ ГЛОБАЛЬНО</span>
+	
+	
+	<div class="reg_log_panel">
+		<a href="reg1.php" id="reg_pop">Регистрация</a>
+		<a href="#login_form" id="login_pop">Войти</a>
+	</div>
+	
+	<a href="#x" class="reg_log_overlay" id="login_form"></a>
+	
+	<div class="reg_log_popup bgcolor">
+	
+				<a href="#close" class="reg_log_close"></a>
+
+				<span id="reg_log_popup-title">Авторизация</span>
+				
+        <form action='enter1.php' method='POST'>
+				<span class="input input_email">
+				
+					<input type="email" name="email" maxlength="40" class="input_field" id="input-1">
+					
+					<label class="input_label" for="input-1">
+						<span class="input_label-content input_label-content-2">E-mail</span>
+					</label>
+					
+				</span>
+				
+				<span class="input input_password">
+				
+					<input type="password" name="password" maxlength="40" class="input_field" id="input-2">
+					
+					<label class="input_label" for="input-2">
+						<span class="input_label-content input_label-content-2">Пароль</span>
+					</label>
+					
+				</span>
+        
+				<input type="submit" value="Войти" class="btn_popup_login">
+        </form>
+				
+				<a href="#" class="forgot_password">забыли пароль?</a>
+
+	</div>
+	
+</header>
+
+<nav>
+	<div class="main_menu">
+		<a href="index.html" class="main_menu_buttons main_menu_current_page">Главная</a>
+		<a href="enter1.php" class="main_menu_buttons">Личный кабинет</a>
+		<a href="redactor.php" class="main_menu_buttons">Администратор</a>
+		<a href="faq.php" class="main_menu_buttons">ЧАВО</a>
+		<a href="news.php" class="main_menu_buttons">Новости</a>
+		<a href="application.php" class="main_menu_buttons">Просмотр конкурсов</a>
+	</div>
+</nav>
+
+
+<div class="content">
+
+	<div class="content_2">
+	
+		<div class="content_box_1">
+
+			<div class="inf">
+				<div id="zagolovok">Наука и инновации в Красноярском крае</div>
+				
+				<div id="line_2"></div>
+				
+				<ul type="disc" id="punkti">
+					<li>Поддержка фундаментальных научных исследований</li>
+					<li>Поддержка прикладных научных исследований</li>
+					<li>Внедрение результатов научно-технических исследований</li>
+					<li>Поддержка проведения научно-образовательных мероприятий</li>
+					<li>Поддержка талантливой молодежи</li>
+				</ul>
+			</div>
+			
+			<img src="images/earth.gif" alt="earth" id="earth">
+			
+		</div>
+
+	</div>
+	
+</div>
+	
+<footer>
+	<div id="text_footer">
+		Краевое государственное автономное учреждение<br>"Красноясркий краевой фонд поддержеи научной и научно-технической деятльности"
+	</div>
+</footer>
+
+</div>
+</body>
+</html>

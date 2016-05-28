@@ -1,0 +1,72 @@
+<?php
+    $db = mysql_connect("localhost", "root", "slipknot");
+    mysql_select_db("good_mark");
+    mysql_query("SET CHARSET windows-1251");
+        /*if(isset($_POST["email"])&&isset($_POST["password"])){
+            
+            $pEmail=htmlspecialchars(mysql_real_escape_string($_POST["email"]));
+            $pPassword=md5(htmlspecialchars(mysql_real_escape_string($_POST["password"])));
+            $checkEmail=mysql_num_rows(mysql_result(mysql_query("SELECT user_id FROM users WHERE email='$pEmail'"),0));
+            $checkPassword=mysql_result(mysql_query("SELECT user_id FROM users WHERE md5_password='$pPassword'"),0);
+            
+            if($checkEmail!=""&&$checkPassword!=""){
+                
+                printUserInformation($checkPassword);
+                $idOrg=mysql_query("SELECT id_org FROM users WHERE email='$pEmail'");
+                printOrgInformation($idOrg);
+                //выводим данные о пользователе
+                
+        }else
+            print "Ошибка, неверные данные!";
+
+    }elseif($_COOKIE[$md5Time]!=""){
+            
+        $timeId=htmlspecialchars(mysql_real_escape_string($_COOKIE[$md5Time]));
+        //print '---'.$timeId.'---';
+        $checkCookie=mysql_result(mysql_query("SELECT user_id FROM users WHERE time_id='$timeId'"),0);
+            
+        if($checkCookie!=""){
+            
+            print "<a href='texpanel.php?a=news'>Новости</a>
+                    <a href='texpanel.php?a=news'>ЧАВО</a>
+                    <a href='texpanel.php?a=news'>Конкурсы</a>";
+            if($_GET['a']=='news'){
+                
+                $sAllNews=mysql_query("SELECT * FROM news");
+                $arrayNews=mysql_fetch_assoc($sAllNews);
+                $colNews=mysql_num_rows(mysql_query("SELECT new_id FROM news"));
+                if( $colNews > 0 ){
+                    for($i=0;$i<$colNews;$i++){
+                        print "<h2>".$arrayNews['title']."</h2>
+                            <p>".$arrayNews['full_text']."</p>
+                            <p><b>".$arrayNews['dates']."</b></p><br>
+                            <a href='texpanel.php?a=news&id=".$arrayNews['new_id']."&do=update'>Изменить</a><br>
+                            <a href='texpanel.php?a=news&id=".$arrayNews['new_id']."&do=delete'>Удалить</a><br>";
+                    }
+                }
+                
+            }
+            
+            }else
+                print "Чет с куками у вас какая-то муть!";
+        
+    }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+?>

@@ -1,0 +1,240 @@
+<?php
+mysql_connect("localhost","root","password");
+mysql_select_db("good_mark");
+function check($var){
+	return htmlspecialchars(mysql_real_escape_string($var));
+}
+if(isset($_POST["login"])!=""&&isset($_POST["password"])!=""){
+
+	$p_log=md5(check($_POST["login"]));
+	$p_pass=md5(check($_POST["password"]));
+	$s_log=mysql_query("SELECT md5_login FROM users WHERE md5_login='$p_log'");
+	$s_pass=mysql_query("SELECT md5_password FROM users WHERE md5_password='$p_pass'");
+	$s_check=mysql_query("SELECT check_email FROM users WHERE md5_login='$p_log'");
+	$r_log=mysql_result($s_log, 0);
+	$r_pass=mysql_result($s_pass, 0);
+	$r_email=mysql_result($s_check, 0);
+	if($s_log!=""&&$s_pass!=""){
+
+		if($_GET["check"]=="$r_email"||$r_email=="y"){
+			if($_GET["check"]==$r_email){
+				mysql_query("UPDATE users SET check_email='y' WHERE md5_login='$r_log'");
+			}else if($r_email=="y"){
+				setcookie("d56b699830e77ba53855679cb1d252da",$r_log);
+				setcookie("5f4dcc3b5aa765d61d8327deb882cf99",$r_pass);
+				header("Location: enter.php");
+				/*$s_all=mysql_query(
+					"SELECT mobile, name, surname, email, middle_name, country, tower, work, job, dates, avatar
+					 FROM users 
+					 WHERE md5_login='$r_log'");
+				$a_array=mysql_fetch_assoc($s_all);
+				if($a_array['avatar']==""){
+					$avatar="user.png";
+				}else{
+					$avatar=$a_array['avatar'];
+				}
+				print "
+				<img src='".$avatar."'/>
+				<br>Фамилия:".$a_array['surname']."
+				<br>Имя:".$a_array['name']."
+				<br>Отчество:".$a_array['middle_name']."
+				<br>Контактный телефон: +7".$a_array['mobile']."
+				<br>e-mail:".$a_array['email']."
+				<br>Страна:".$a_array['country']."
+				<br>Город:".$a_array['tower']."
+				<br>Место работы:".$a_array['work']."
+				<br>Должность:".$a_array['job']."
+				<br>Дата регистрации:".date('H.m.Y H:i:s',$a_array['dates']);*/
+			}
+			
+		}else{
+			print "Подтвердите ваш емаил!";
+		}
+			
+	}else{
+		print "Неверный логин или пароль!";
+	}
+
+}else if($_COOKIE["d56b699830e77ba53855679cb1d252da"] != "" &&
+	$_COOKIE["5f4dcc3b5aa765d61d8327deb882cf99"]!="")
+{
+	$p_log=check($_COOKIE["d56b699830e77ba53855679cb1d252da"]);
+	$p_pass=check($_COOKIE["5f4dcc3b5aa765d61d8327deb882cf99"]);
+
+	$s_log=mysql_query("SELECT md5_login FROM users WHERE md5_login='$p_log'");
+	$s_pass=mysql_query("SELECT md5_password FROM users WHERE md5_password='$p_pass'");
+	$s_check=mysql_query("SELECT check_email FROM users WHERE md5_login='$p_log'");
+
+	$r_log=mysql_result($s_log, 0);
+	$r_pass=mysql_result($s_pass, 0);
+	$r_email=mysql_result($s_check, 0);
+	if($s_log!=""&&$s_pass!=""){
+
+		if($_GET["check"]=="$r_email"||$r_email=="y"){
+			if($_GET["check"]==$r_email){
+				mysql_query("UPDATE users SET check_email='y' WHERE md5_login='$r_log'");
+			}else if($r_email=="y"){
+				//отображаем данные о пользователе
+				include("upp.php");
+				if(
+				isset($_POST["name"]) || isset($_POST["surname"]) || isset($_POST["middle_name"]) || isset($_POST["country"]) || isset($_POST["tower"]) || isset($_POST["work"]) || isset($_POST["job"]) )
+				{
+					
+					$p_name=check($_POST["name"]);
+					$p_surname=check($_POST["surname"]);
+					$p_middle_name=check($_POST["middle_name"]);
+					$p_country=check($_POST["country"]);
+					$p_tower=check($_POST["tower"]);
+					$p_work=check($_POST["work"]);
+					$p_job=check($_POST["job"]);
+
+					if(
+						strlen($_POST["name"])>0&&
+						preg_match("#\A[?+абвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ]{4,50}\z#", $_POST["name"])
+					){
+						mysql_query("UPDATE users SET name='$p_name' WHERE md5_login='$r_log'");
+					}
+					if(
+						strlen($_POST["surname"])>0&&
+						preg_match("#\A[?+абвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ]{4,50}\z#", $_POST["surname"])
+					){
+						mysql_query("UPDATE users SET surname='$p_surname' WHERE md5_login='$r_log'");
+					}
+					if(
+						strlen($_POST["middle_name"])>0&&
+						preg_match("#\A[?+абвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ]{4,50}\z#", $_POST["middle_name"])
+					){
+						mysql_query("UPDATE users SET middle_name='$p_middle_name' WHERE md5_login='$r_log'");
+					}
+					if(
+						strlen($_POST["country"])>0&&
+						preg_match("#\A[?+абвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ]{4,50}\z#", $_POST["country"])
+					){
+						mysql_query("UPDATE users SET country='$p_country' WHERE md5_login='$r_log'");
+					}
+					if(
+						strlen($_POST["tower"])>0&&
+						preg_match("#\A[?+абвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ]{4,50}\z#", $_POST["tower"])
+					){
+						mysql_query("UPDATE users SET tower='$p_tower' WHERE md5_login='$r_log'");
+					}
+					if(
+						strlen($_POST["work"])>0&&
+						preg_match("#\A([- a-zA-Z0-9]{4,50})|([- абвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ0-9]{4,50})\z#", $_POST["work"])
+					){
+						mysql_query("UPDATE users SET work='$p_work' WHERE md5_login='$r_log'");
+					}
+					if(
+						strlen($_POST["job"])>0&&
+						preg_match("#\A([?+ абвгдеёжзийклмнопрстуфхцчшщьыъэюяАБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯa-zA-Z]{4,50})\z#", $_POST["job"])
+					){
+						mysql_query("UPDATE users SET job='$p_job' WHERE md5_login='$r_log'");
+					}
+					print "UPDATE!";
+
+				}
+				
+
+
+
+				$path = 'img/'; // директория для загрузки
+				$ext = array_pop(explode('.',$_FILES['myfile']['name'])); // расширение
+				$new_name = time().'.'.$ext; // новое имя с расширением
+				$full_path = $path.$new_name; // полный путь с новым именем и расширением
+
+				if(isset($_FILES['myfile']) && $_FILES['myfile']['error'] == 0&&(
+					@mime_content_type($_FILES['myfile']['tmp_name'])=="image/gif"||
+					@mime_content_type($_FILES['myfile']['tmp_name'])=="image/jpeg"||
+					@mime_content_type($_FILES['myfile']['tmp_name'])=="image/png"
+					) ){
+				    if(move_uploaded_file($_FILES['myfile']['tmp_name'], $full_path)){
+				        // Если файл успешно загружен, то вносим в БД (надеюсь, что вы знаете как)
+				        // Можно сохранить $full_path (полный путь) или просто имя файла - $new_name
+				        $s_file=mysql_query("SELECT avatar FROM users WHERE md5_login='$r_log'");
+				        if($s_file!=NULL){
+				        	$r_file=mysql_result($s_file, 0);
+				        	unlink($r_file);
+				        	mysql_query("UPDATE users SET avatar='$full_path' WHERE md5_login='$r_log'");
+				        }else{
+				        	mysql_query("INSERT INTO users(avatar) VALUES('$full_path')");
+				        	print $full_path."-------";
+				        }
+				    }
+				}else{
+					//echo "Вы можете загружать изображения форматов: jpeg, jpg, png, gif";
+				}
+
+
+				$s_all=mysql_query(
+					"SELECT mobile, name, surname, email, middle_name, country, tower, work, job, dates, avatar
+					 FROM users 
+					 WHERE md5_login='$r_log'");
+				$a_array=mysql_fetch_assoc($s_all);
+				if($a_array['avatar']==""){
+					$avatar="user.png";
+				}else{
+					$avatar=$a_array['avatar'];
+				}
+				if($_GET["a"]!="u" && $_GET["a"]!="d" && $_GET["a"]!="nd"){
+				print "
+				<div id='reg'>
+				<img src='".$avatar."' width=180 height=240/ style='float:left;'>
+				<table><tr class='tr_user'><td><h3 class='punkt'>Фамилия:</h3></td><td><span class='user_info'>".$a_array['surname']."</span></td></tr>
+				<tr class='tr_user'><td><h3 class='punkt'>Имя:</h3></td><td><span class='user_info'>".$a_array['name']."</span></td></tr>
+				<tr class='tr_user'><td><h3 class='punkt'>Отчество:</h3></td><td><span class='user_info'>".$a_array['middle_name']."</span></td></tr>
+				<tr class='tr_user'><td><h3 class='punkt'>Контактный телефон:</h3></td><td> <span class='user_info'>+7".$a_array['mobile']."</span></td></tr>
+				<tr class='tr_user'><td><h3 class='punkt'>e-mail:</h3></td><td><span class='user_info'>".$a_array['email']."</span></td></tr>
+				<tr class='tr_user'><td><h3 class='punkt'>Страна:</h3></td><td><span class='user_info'>".$a_array['country']."</span></td></tr>
+				<tr class='tr_user'><td><h3 class='punkt'>Город:</h3></td><td><span class='user_info'>".$a_array['tower']."</span></td></tr>
+				<tr class='tr_user'><td><h3 class='punkt'>Место работы:</h3></td><td><span class='user_info'>".$a_array['work']."</span></td></tr>
+				<tr class='tr_user'><td><h3 class='punkt'>Должность:</h3></td><td><span class='user_info'>".$a_array['job']."</span></td></tr>
+				<tr class='tr_user'><td><h3 class='punkt'>Дата регистрации:</h3></td><td><span class='user_info'>".date('H.m.Y H:i:s',$a_array['dates'])."</span></td></tr></table>";
+				print "</div>";
+				}
+
+				if($_GET["a"]=="u"){
+					echo "<div id='d_update'>
+							<img src='".$avatar."' width=120 height=160>
+							<form action='enter.php' method='POST' enctype='multipart/form-data' style='float:right; padding-right:700px;'>
+							  <p>
+							    <label>
+							      <input type='file' name='myfile' id='myfile' value='Новая аватарка'>
+							    </label>
+							  </p>
+							  <p>
+							    <input type='submit' name='submit' value='Сменить' id='f_a'>
+							  </p>
+							</form>						
+							<form action='enter.php' method='POST'>
+								Фамилия:<br><input type='text' name='surname' class='e_enter'><br>
+								Имя:<br><input type='text' name='name' class='e_enter'><br>
+								Отчество:<br><input type='text' name='middle_name' class='e_enter'><br>
+								Организация:<br><input type='text' name='work' class='e_enter'><br>
+								Должность:<br><input type='text' name='job' class='e_enter'><br>
+								Страна:<br><input type='text' name='country' class='e_enter'><br>
+								Город:<br><input type='text' name='tower' class='e_enter' id='b_bottom'><br>
+								
+								
+								
+								<input type='submit' value='Обновить данные'  class='great_btn'>						
+						</form>
+					</div>";
+				}
+				
+					include("down.php");
+
+			}
+			
+		}else{
+			print "Подтвердите ваш емаил!";
+		}
+		
+	}else{
+		print "Неверный логин или пароль!";
+	}
+}else{
+	print "Кривые куки";
+}
+
+
+?>

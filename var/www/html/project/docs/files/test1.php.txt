@@ -1,0 +1,95 @@
+<?php
+    header('Content-Type: text/html; charset=utf-8');
+    $db = mysql_connect("localhost", "root", "slipknot");
+    mysql_select_db("good_mark");
+$userId=2;
+function printUserInformation($userId){
+        $sInformation=mysql_query("SELECT * FROM users WHERE user_id='$userId'");
+        $arrInformation=mysql_fetch_assoc($sInformation);
+        $jobId=$arrInformation['job'];
+        $job=mysql_result(mysql_query("SELECT job FROM job WHERE job_id='$jobId'"),0);
+        if($arrInformation['gender']=='male'){
+            $sex='Мужской';
+        }else{
+            $sex='Женский';
+        }
+        /*print "<p class='opis'>фамилия:</p>"
+            .$arrInformation['surname'].
+            "<p class='opis'>Имя:</p>"
+            .$arrInformation['name'].
+            "<p class='opis'>Отчество:</p>"
+            .$arrInformation['middle_name'].
+            "<p class='opis'>Дата Рождения:</p>"
+            .$arrInformation['date_birth'].
+            "<p class='opis'>Пол:</p>"
+            .$sex.
+            "<p class='opis'>Домашний адрес:</p>"
+            .$arrInformation['adress'].
+            "<p class='opis'>Домашний индекс:</p>"
+            .$arrInformation['p_index'].
+            "<p class='opis'>Подразделение:</p>"
+            .$arrInformation['podrazd'].
+            "<p class='opis'>Должность:</p>"
+            .$job.
+            "<p class='opis'>Электронный адрес:</p>"
+            .$arrInformation['email'].
+            "<p class='opis'>Контактный телефон:</p>"
+            .$arrInformation['phone'].
+            "<p class='opis'>Дата регистрации:</p>"
+            .$arrInformation['dates'];*/
+        if($arrInformation['surname']=="Пахомов" AND $arrInformation['name']=="Пахом" AND $arrInformation['middle_name']=="Пахомович" AND $arrInformation['date_birth']=="12.12.1111" AND $arrInformation['adress']=="11111111111111" AND $arrInformation['p_index']=="111111111" AND $arrInformation['podrazd']=="фвафафывафыв" AND $arrInformation['email']=="фвыафывафыва" AND $arrInformation['phone']=="1111111111" AND $arrInformation['dates']=="фывафывафывафвыа"){
+            print "<script>alert('тест на данные о пользователе выполнен успешно!');</script>";
+        }
+    }
+    $orgId=1;
+    function printOrgInformation($orgId){
+        $sInformation=mysql_query("SELECT * FROM organizations WHERE id_org='$orgId'");
+        $arrInformation=mysql_fetch_assoc($sInformation);
+        
+        /*print "<p class='opis'>Название организации:</p>"
+            .$arrInformation['name'].
+            "<p class='opis'>ИНН:</p>"
+            .$arrInformation['inn'].
+            "<p class='opis'>КПП:</p>"
+            .$arrInformation['kpp'].
+            "<p class='opis'>ОГРН:</p>"
+            .$arrInformation['ogrn'].
+            "<p class='opis'>ОКПО:</p>"
+            .$arrInformation['okpo'].
+            "<p class='opis'>ОКАТО:</p>"
+            .$arrInformation['okato'].
+            "<p class='opis'>Основной вид экономической деятельности:</p>"
+            .$arrInformation['oved'].
+            "<p class='opis'>Юридический адрес:</p>"
+            .$arrInformation['ur_adress'].
+            "<p class='opis'>Фактический адрес:</p>"
+            .$arrInformation['f_adress'].
+            "<p class='opis'>Адрес для корреспонденции:</p>"
+            .$arrInformation['kor_adress'].
+            "<p class='opis'>Факс:</p>"
+            .$arrInformation['fax'].
+            "<p class='opis'>Телефон:</p>"
+            .$arrInformation['phone'].
+            "<p class='opis'>Электронный адрес:</p>"
+            .$arrInformation['email'];*/
+        
+        
+          if($arrInformation['name']=="Vintik" &&
+          $arrInformation['inn']=="111111111" &&
+          $arrInformation['kpp']=="11111111" &&
+          $arrInformation['ogrn']=="1102468000524" &&
+          $arrInformation['okpo']=="11111111" &&
+          $arrInformation['okato']=="11111111" &&
+          $arrInformation['oved']=="dsaffffffffasdfads" &&
+          $arrInformation['ur_adress']=="dfasdfasdfasdf" &&
+          $arrInformation['f_adress']=="asdfasdfasdfasd" &&
+          $arrInformation['kor_adress']=="asdfasdfasdasfdasf" &&
+          $arrInformation['fax']=="1111111111" &&
+          $arrInformation['phone']=="1111111111" &&
+          $arrInformation['email']=="aow2master@yandex.ru"){
+            print "<script>alert('тест на данные об организации выполнен успешно!');</script>";
+        }
+    }
+printUserInformation($userId);
+printOrgInformation($orgId);
+?>

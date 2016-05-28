@@ -1,0 +1,34 @@
+<form action="new.php" method="POST">
+<textarea name="su"></textarea>
+<textarea name="pril"></textarea>
+<textarea name="pr"></textarea>
+<textarea name="gl"></textarea>
+<textarea name="name"></textarea>
+<input type="submit"></form>
+<?php
+mysql_connect("localhost","root","password");
+mysql_select_db("good_mark");
+$su=$_POST["su"];
+$pril=$_POST["pril"];
+$pr=$_POST["pr"];
+$gl=$_POST["gl"];
+mysql_query("INSERT INTO citata(su,pril,pr,gl) VALUES('$su','$pril','$pr','$gl')");
+$su=mysql_result(mysql_query("SELECT su FROM citata WHERE id='1'"), 0);
+$pril=mysql_result(mysql_query("SELECT pril FROM citata WHERE id='1'"), 0);
+$pr=mysql_result(mysql_query("SELECT pr FROM citata WHERE id='1'"), 0);
+$gl=mysql_result(mysql_query("SELECT gl FROM citata WHERE id='1'"), 0);
+$arr_su=explode(" ", $su);
+$arr_pril=explode(" ", $pril);
+$arr_pr=explode(" ", $pr);
+$arr_gl=explode(" ", $gl);
+$col_su=rand(0,4);
+$col_pr=rand(0,150);
+$col_pril=rand(0,600);
+$col_gl=rand(0,400);
+
+	print $arr_su[$col_su]." ".$arr_pril[$col_pril]." ".$arr_gl[$col_gl]." ".$arr_pr[$col_pr];
+	$col_pril=rand(0,600);
+	$col_su=rand(0,4);
+	print " ".$arr_su[$col_su]." ".$arr_pril[$col_pril];
+
+?>

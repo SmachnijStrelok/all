@@ -1,0 +1,23 @@
+<html>
+<head>
+	<title>KRSK</title>
+	<link type="text/css" rel="stylesheet" href="style.css">
+	<meta charset="utf-8">
+</head><body>
+<div id="main">
+	<div id="head"><img src="images/1.jpg"></div>
+	<div id="left_menu">
+		<a href="#1" class="l_link" id="first_link">Гранты</a>
+		<a href="#2" class="l_link">Заявки</a>
+		<a href="#3" class="l_link">Конкурсы</a>
+		<a href="#4" class="l_link">Отзывы</a>
+		<a href="#5" class="l_link">Поддержка</a>
+		<a href="#6" class="l_link">О сайте</a>
+
+	</div>
+	<div id="CONTENT"><ul id='top_menu'>
+		<li style='margin-left:-20px;'><a href='enter.php' class='upp_link'>Профиль</a></li>
+		<li><a href='enter.php?a=u' class='upp_link'>Редактирование профиля</a></li>
+		<li><a href='#' class='upp_link'>Мои заявки</a></li>
+		<li><a href='#' class='upp_link'>Создать заявку</a></li>
+	</ul>

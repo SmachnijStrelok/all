@@ -1,0 +1,27 @@
+<?php
+class Animals{
+    public $cat='cat';
+    public $dog='dog';
+    public $pig='pig';
+    
+    public function __construct($cat, $dog, $pig){
+        $this->cat=$cat;
+        $this->dog=$dog;
+        $this->pig=$pig;
+    }
+    
+    public function getDogCat(){
+        return "{$this->cat} "."{$this->dog}";
+    }
+}
+class homeAnimals{
+    public function kot(Animals $animal){//уточняем тип получаемых данных
+        return $animal->dog." ".$animal->pig;
+    }
+}
+$animals= new Animals('Мурка','Тайсон','серега');
+$home= new homeAnimals();
+echo $home->kot($animals);
+//echo $animals->dog;
+//echo $animals->getDogCat();
+?>

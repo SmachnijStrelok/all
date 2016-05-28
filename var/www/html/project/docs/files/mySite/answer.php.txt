@@ -1,0 +1,82 @@
+<?php
+mysql_connect("localhost","root","password");
+mysql_select_db("good_mark");
+function check($var){
+	return htmlspecialchars(mysql_real_escape_string($var));
+}
+
+
+if($_COOKIE["d56b699830e77ba53855679cb1d252da"] != "" &&
+	$_COOKIE["5f4dcc3b5aa765d61d8327deb882cf99"]!="")
+{
+	$p_log=check($_COOKIE["d56b699830e77ba53855679cb1d252da"]);
+	$p_pass=check($_COOKIE["5f4dcc3b5aa765d61d8327deb882cf99"]);
+
+	$s_log=mysql_query("SELECT md5_login FROM users WHERE md5_login='$p_log'");
+	$s_pass=mysql_query("SELECT md5_password FROM users WHERE md5_password='$p_pass'");
+	$s_check=mysql_query("SELECT check_email FROM users WHERE md5_login='$p_log'");
+
+	$r_log=mysql_result($s_log, 0);
+	$r_pass=mysql_result($s_pass, 0);
+	$r_email=mysql_result($s_check, 0);
+	if($s_log!=""&&$s_pass!=""){
+
+		if($_GET["check"]=="$r_email"||$r_email=="y"){
+			if($_GET["check"]==$r_email){
+				mysql_query("UPDATE users SET check_email='y' WHERE md5_login='$r_log'");
+			}else if($r_email=="y"){
+				//отображаем данные о пользователе
+				include("upp.php");
+				print '<h2 id="h_an">Оставить отзыв</h2><div id="answer"><form action="answer.php" method="POST">
+				<textarea name="text"></textarea><br>
+				<input type="submit" class="great_btn" value="Оставить отзыв">
+				</form><p class="g_comment">
+				Ваш отзыв будет опубликован сразу после проверки его модератором сайта.<br>
+				*Незарегестрированные пользователи не могут оставлять отзыв.<br>
+				**Каждый пользователь может оставить не более одного отзыва.<br></p></div>';
+				$s_log=mysql_query("SELECT login FROM users WHERE md5_login='$p_log'");
+				$r_log=mysql_result($s_log, 0);
+
+	if(isset($_POST["text"])){
+		$res=mysql_result(mysql_query("SELECT message FROM answer WHERE user='$r_log"), 0);
+		if($res==""){
+			$message=check($_POST["text"]);
+			$dates=time();
+			mysql_query("CREATE TABLE answer(
+				id INT AUTO_INCREMENT,
+				message TEXT,
+				user VARCHAR(64),
+				dates VARCHAR(16),
+				public VARCHAR(8),
+				PRIMARY KEY(id))");
+			mysql_query("INSERT INTO answer(user,message,dates,public) VALUES('$r_log','$message','$dates','NO')");
+
+		}else{
+			print "Каждый пользователь не может оставлять более одного отзыва.";
+		}
+	}
+	$s_all=mysql_query("SELECT user,message,dates FROM answer WHERE public='YES'");
+	$r_img=mysql_result(mysql_query("SELECT avatar FROM users WHERE login='$r_log'"), 0);
+	while($array=mysql_fetch_assoc($s_all)){
+		print "<div class='comment'><img src='".$r_img."' id='img_a' width=60 height=80><span id='more'>Отзыв от ".$r_log."<br>".date('H.m.Y H:i:s',$array['dates'])."</span><br><p class='answer'>".$array['message']."</p></div><hr class='hr_comment'>";
+		
+	}
+	include("down.php");
+
+
+
+		}
+			
+		}else{
+			print "Подтвердите ваш емаил!";
+		}
+		
+	}else{
+		print "Неверный логин или пароль!";
+	}
+}else{
+	print "Кривые куки";
+}
+
+
+?>

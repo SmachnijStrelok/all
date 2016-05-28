@@ -1,0 +1,5 @@
+</div>
+	
+	<div id="footer">fourm-krsk.ru Все права защищены</div>
+</div>
+</body></html>

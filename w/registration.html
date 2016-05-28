@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="shortcut icon" href="images/icon.jpg">
+<title>Краевой фонд науки - Регистрация</title>
+<link href="css/style.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<div class="wrapper">
+	<header>
+		<div id="hed_main">
+			<a href="http://krai-fond.ru"><span id="hed_title">Краевой фонд науки</span></a>
+		</div>
+		<span id="post_header">ДУМАЕМ ГЛОБАЛЬНО</span>
+	</header>
+
+	<nav>
+		<div class="main_menu">
+			<a href="index.html" class="main_menu_buttons">Главная</a>
+			<a href="#" class="main_menu_buttons">Подать заявку</a>
+			<a href="#" class="main_menu_buttons">Реестр заявок</a>
+			<a href="#" class="main_menu_buttons">Помощь</a>
+		</div>
+	</nav>
+
+
+<div id="content" class="clearfix">
+	<div id="registration_form" class="clearfix">
+		<form action="formdata.php" method="POST" name="registration">
+			<div class="fieldset_1">
+			
+				<p id="reg_title">Регистрация</p>
+				
+					<span class="tooltip anim" tabindex="0">подсказка по вводу
+						<span>Вводите только буквы русского алфавита, начания с заглавной. <br>Максимальная длина: 15 символов.</span>
+					</span>
+
+				<label class="label">Фамилия:
+					
+					<p><input type="text" pattern="[А-ЯЁ][а-яё]+$" name="surname" maxlength="20" placeholder="Введите фамилию"
+						required title="Вводите только буквы русского алфавита, начания с заглавной. Максимальная длина: 15 символов." class="form_style"></p>
+				</label>
+				
+				<label class="label">Имя:
+					<span class="tooltip anim" tabindex="0">подсказка по вводу
+						<span>Вводите только буквы русского алфавита, начания с заглавной. <br>Максимальная длина: 15 символов.</span>
+					</span>
+					
+					<p><input type="text" pattern="[А-ЯЁ][а-яё]+$" name="name" maxlength="15" placeholder="Введите имя"
+						required title="Вводите только буквы русского алфавита, начания с заглавной. Максимальная длина: 15 символов." class="form_style"></p>
+				</label>
+				
+				<label class="label">Отчество:
+					<span class="tooltip anim" tabindex="0">подсказка по вводу
+						<span>Вводите только буквы русского алфавита, начания с заглавной. <br>Максимальная длина: 15 символов.</span>
+					</span>
+				
+					<p><input type="text" pattern="[А-ЯЁ][а-яё]+$" name="otchestvo" maxlength="20" placeholder="Введите отчество"
+						required title="Вводите только буквы русского алфавита, начания с заглавной. Максимальная длина: 15 символов." class="form_style"></p>
+				</label>
+				
+				<label class="label">Дата рождения:
+					<p><input type="date" pattern="[0-3][0-9].[0-1][0-9].19[0-9]{2}" name="birthday" maxlength="10" placeholder="дд.мм.гггг"
+						required title="Выберете дату в календаре. Если календарь не отображается, введите дату в формате 'дд.мм.гггг'." class="form_style"></p>
+				</label>
+				
+				<label class="label" for="sex">Пол:</label>
+					<p><label>
+						Мужской<input type="radio" name="sex" value="male" checked></label> <label>Женский<input type="radio" name="sex" value="female">
+					</label></p>
+					
+			</div>
+			
+			<div class="fieldset_2">
+				<label class="label">Домашний адрес:
+					<p class="post_form">Пример: (без индекса) г. Москва, Ломоносовский пр-т, д.31, корп.2, кв.15</p>
+						<p><input type="text" name="address" maxlength="50" placeholder="Введите адрес" required id="address" class="form_style"></p>
+				</label>
+
+				<label class="label">Домашний индекс:
+					<p><input type="text" pattern="[0-9]{6}" name="home_index" maxlength="6" placeholder="Введите домашний индекс"
+						required title="Вводите только цифры." class="form_style"></p>
+				</label>
+				
+				<label class="label">Номер телефона:
+					<span class="tooltip anim" tabindex="0">подсказка по вводу
+						<span nowrap>Введите номер телефона в формате: <br>(ххх)-ххх-хххх</span>
+					</span>
+
+					<p><input type="tel" pattern="[(][0-9]{3}[)]-[0-9]{3}-[0-9]{4}" maxlength="14" name="tel"
+						placeholder="Введите номер телефона" required title="Пожалуйста, придерживайтесь формата по вводу номера телефона: (xxx)-xxx-xxxx" class="form_style"></p>
+				</label>
+				
+			</div>
+			
+			<div class="fieldset_3">
+				<label class="label">Наименование организации:
+					   <p><select id="org_name" class="form_style">
+						   <?php
+								for($i=0;$i<$col_string;$i++){
+									print "<option value='".mysql_result($sName,$i)."' class='reg'>".mysql_result($sName,$i)."</option>";
+								}
+						   ?>
+						</select></p>
+				</label>
+				
+				<label class="label">ИНН:
+					<p><input type="text" pattern="[0-9]{10}" name="inn" maxlength="10" placeholder="Введите ИНН"
+					title="Вводите только цифры." required id="inn" class="form_style"></p>
+				</label>
+				
+				<label class="label">KПП:
+					<p><input type="text" pattern="[0-9]{9}" name="kpp" maxlength="9" placeholder="Введите KПП"
+					title="Вводите только цифры." required id="kpp" class="form_style"></p>
+				</label>
+				
+				<label class="label">ОГРН:
+					<p><input type="text" pattern="[0-9]{13}" name="ogrn" maxlength="13" placeholder="Введите ОГРН"
+					title="Вводите только цифры." required id="ogrn" class="form_style"></p>
+				</label>
+				
+				<label class="label">ОКПО:
+					<p><input type="text" pattern="[0-9]{8}" name="okpo" maxlength="8" placeholder="Введите ОКПО"
+					title="Вводите только цифры." required id="okpo" class="form_style"></p>
+				</label>
+				
+				<label class="label">ОКАТО:
+					<p><input type="text" pattern="[0-9]{11}" name="okato" maxlength="11" placeholder="Введите ОКАТО"
+					title="Вводите только цифры." required id="okato" class="form_style"></p>
+				</label>
+				
+				<label class="label">Основной вид экономической деятельности:
+					<p><input type="text" pattern="^[А-Яа-яЁё\s]+$"  name="oved" maxlength="100"
+						placeholder="Введите основной вид экономической деятельности" title="Вводите только буквы русского алфавита." required id="oved" class="form_style"></p>
+				</label>
+				
+				<label class="label">Юридический адрес:
+					<p class="post_form">Пример: г. Москва, Ломоносовский пр-т, д.31, корп.2, кв.15</p>
+						<p><input type="text"  name="ur_address" maxlength="50" placeholder="Введите юридический адрес" required id="ur_adress" class="form_style"></p>
+				</label>
+				
+				<label class="label">Фактический адрес:
+					<p><input type="text" name="f_address" maxlength="50" placeholder="Введите фактический адрес" required id="f_adress" class="form_style"></p>
+				</label>
+				
+				<label class="label">Адрес для корреспонденции:
+					<p><input type="text" name="kor_address" maxlength="50" placeholder="Введите адрес для корреспонденции" required id="kor_adress" class="form_style"></p>
+				</label>
+				
+				<label class="label">Факс:
+					<p><input type="tel" pattern="[(][0-9]{3}[)]-[0-9]{3}-[0-9]{4}"  name="fax"maxlength="14" placeholder="Введите факс"
+						required title="Введите номер факса в формате: (ххх)-ххх-хххх" id="fax" class="form_style"></p>
+				</label>
+				
+				<label class="label">Телефон:
+					<p><input type="tel" pattern="[(][0-9]{3}[)]-[0-9]{3}-[0-9]{4}" maxlength="14" name="phone"
+					placeholder="Введите номер телефона" required title="Введите номер телефона в формате: (ххх)-ххх-хххх" id="phone" class="form_style"></p>
+				</label>
+					
+				<label class="label">Электронный адрес:
+					<p><input type="email" name="email" maxlength="20" placeholder="Введите E-mail" required id="email" class="form_style"></p>
+				</label>
+				
+				<label class="label">Подразделение:
+					<p><input type="text" pattern="^[А-Яа-яЁё\s]+$"  name="podr" maxlength="50" placeholder="Введите подразделение"
+					title="Вводите только буквы русского алфавита." class="form_style"></p>
+				</label>
+				
+				<label class="label">Должность:
+					<p><select class="form_style">
+							<?php
+								for($i=0;$i<$colJob;$i++){
+									print "<option value='".mysql_result($sJob,$i)."'>".mysql_result($sJob,$i)."</option>";
+								}
+							?>
+						</select></p>
+				</label>
+				
+			</div>
+			
+			<div class="fieldset_4">
+			
+				<label class="label">Адрес электронной почты:
+					<p><input type="email" name="email_form" maxlength="20" placeholder="Введите E-mail" required class="form_style"></p>
+				</label>
+				
+				<label class="label">Пароль:
+					<p><input type="password" name="reg_password_2(first)" maxlength="25" placeholder="Введите пароль" required class="form_style"></p>
+				</label>
+				
+				<label class="label">Подтверждение пароля:
+					<p><input type="password" name="reg_password_2(second)" maxlength="25" placeholder="Подтвердите пароль" required class="form_style"></p>
+				</label>
+				
+			</div>
+			
+			<div class="accept">
+			
+				<label id="soglasie"><input type="checkbox" name="soglasie" required>Согласие на обработку персональных данных</label>
+					<p><input type="submit" name="form_submit" alt="form_submit" id="form_submit" value="Зарегистрироваться"></p>
+					
+			</div>
+		</form>
+	</div>
+	
+	<aside class="clearfix">
+		<div id="aside_buttons_all" class="clearfix">
+			<div id="aside_button_1" class="clearfix">
+				<a href="#" id="aside_button_1c" class="aside_buttons"><span>Просмотр заявок</span></a>
+			</div>
+			
+			<div id="aside_button_2" class="clearfix">
+				<a href="#" id="aside_button_2c" class="aside_buttons"><span>Главная</span></a>
+			</div>
+			
+			<div id="aside_button_3" class="clearfix">
+				<a href="#" id="aside_button_3c" class="aside_buttons"><span>Главная</span></a>
+			</div>
+			
+			<div id="aside_button_4" class="clearfix">
+				<a href="#" id="aside_button_4c" class="aside_buttons"><span>Главная</span></a>
+			</div>
+			
+			<div id="aside_button_5" class="clearfix">
+				<a href="#" id="aside_button_5c" class="aside_buttons"><span>Главная</span></a>
+			</div>
+			
+			<div id="aside_button_6" class="clearfix">
+				<a href="#" id="aside_button_6c" class="aside_buttons"><span>Главная</span></a>
+			</div>
+		</div>
+	</aside>
+	
+	
+	
+	
+	
+</div>		
+		
+<footer>
+	<div id="text_footer">
+		Краевое государственное автономное учреждение<br>"Красноясркий краевой фонд поддержеи научной и научно-технической деятльности"
+	</div>
+</footer>
+		
+</div>
+</body>
+</html>
